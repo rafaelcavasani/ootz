@@ -74,7 +74,7 @@ Crie um usuário para autenticação na API:
 python manage.py createsuperuser
 ```
 
-Suba a API;
+Suba a API:
 
 ```
 python manage.py runserver
