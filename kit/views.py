@@ -24,6 +24,16 @@ class KitViewSet(ModelViewSet):
         if not kit_form.is_valid():
             return Response(data=kit_form.errors, status=400)
 
+        try:
+            kit_persistent = Kit.objects.get(sku=request.data.get('sku', None))
+            if kit_persistent:
+                data = {"sku": [
+                    "Kit com este sku já existe."
+                ]}
+                return Response(data=data, status=400)
+        except:
+            pass
+
         kit = Kit.objects.create(
             sku=request.data.get('sku', None),
             name=request.data.get('name', None),

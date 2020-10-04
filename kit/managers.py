@@ -3,11 +3,19 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.apps import apps
 
 from .forms import KitProductForm
+from product.models import Product
 
 
 class KitProductManager(models.Manager):
     def create_all(self, kit_products, kit):
         for kit_product in kit_products:
+            try:
+                product = Product.objects.get(sku=kit_product['product_id'])
+            except Product.DoesNotExist:
+                data = {"detail": "Produto {} não encontrado".format(
+                    kit_product['product_id'])}
+                return data
+
             kit_product_form = KitProductForm(kit_product)
             if not kit_product_form.is_valid():
                 return kit_product_form.errors
@@ -17,6 +25,13 @@ class KitProductManager(models.Manager):
 
     def update_all(self, kit_products, kit):
         for kit_product in kit_products:
+            try:
+                product = Product.objects.get(sku=kit_product['product_id'])
+            except Product.DoesNotExist:
+                data = {"detail": "Produto {} não encontrado".format(
+                    kit_product['product_id'])}
+                return data
+
             kit_product_form = KitProductForm(kit_product)
             if not kit_product_form.is_valid():
                 return kit_product_form.errors

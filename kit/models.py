@@ -5,7 +5,7 @@ from .managers import KitProductManager
 
 
 class Kit(models.Model):
-    sku = models.CharField(max_length=50, primary_key=True)
+    sku = models.CharField(max_length=50, primary_key=True, unique=True)
     name = models.CharField(max_length=100)
 
     def __str__(self):
