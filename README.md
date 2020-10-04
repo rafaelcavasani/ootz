@@ -19,6 +19,7 @@ Faça o clone do projeto e digite os seguintes comandos, dentro da pasta do proj
 Suba os containers Django e MySQL:
 
 ```
+docker-compose build
 docker-compose up -d
 ```
 
