@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  db:
+    container_name: ootz_db
+    image: mysql:5.6
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_DATABASE: "ootz"
+      MYSQL_USER: "ootz"
+      MYSQL_PASSWORD: "DAO2os02oamSO3"
+      MYSQL_ROOT_PASSWORD: "DAO2os02oamSO3"
+    networks:
+      - api-network
+
+  api:
+    container_name: ootz_api
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/ootz/
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - ENV=development
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    driver: bridge
